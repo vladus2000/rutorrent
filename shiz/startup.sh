@@ -1,3 +1,4 @@
+su - evil -c 'mkdir -p ~evil/rtorrent/.session'
 /fixuser.sh evil
 /unevil.sh
 php-fpm
