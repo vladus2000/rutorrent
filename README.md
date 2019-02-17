@@ -1,13 +1,14 @@
 # rutorrent
-/usr/share/webapps/rutorrent/plugins/autodl-irssi/conf.php
 
-/home/evil/.autodl/autodl.cfg
+VOLUME /home/evil/downloads
+VOLUME /home/evil/rtorrent
+VOLUME /usr/share/webapps/rutorrent/share/settings
 
 /home/evil/.rtorrent.rc
+/home/evil/.autodl/autodl.cfg
 
-/home/evil/downloads
-
-EXPOSE 49152 and 8069
-
-
+# for rutorrent (via nginx)
+EXPOSE 8069
+# for rtorrent
+EXPOSE 49152
 
