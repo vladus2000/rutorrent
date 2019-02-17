@@ -19,6 +19,7 @@ RUN \
 	chown http:http -R rutorrent && \
 	cp ~evil/shiz/conf.php /usr/share/webapps/rutorrent/plugins/autodl-irssi/ && \
 	cp ~evil/shiz/config.php /usr/share/webapps/rutorrent/conf/ && \
+	cp ~evil/shiz/base_startup.sh / && \
 	cp ~evil/shiz/startup.sh / && \
 	cp ~evil/shiz/nginx.conf /etc/nginx/ && \
 	chmod +x /startup.sh && \
