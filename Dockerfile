@@ -32,5 +32,6 @@ EXPOSE 49152
 CMD /bin/bash -c /startup.sh
 
 VOLUME /home/evil/downloads
+VOLUME /home/evil/rtorrent
 VOLUME /usr/share/webapps/rutorrent/share/settings
 
