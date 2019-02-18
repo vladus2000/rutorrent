@@ -23,6 +23,7 @@ RUN \
 	cp ~evil/shiz/startup.sh / && \
 	cp ~evil/shiz/nginx.conf /etc/nginx/ && \
 	chmod +x /startup.sh /base_startup.sh && \
+	chown -R evil:evil /usr/share/webapps/rutorrent && \
 	sed -e 's/;extension=sockets/extension=sockets/' /etc/php/php.ini > /php.ini && \
 	mv /php.ini /etc/php/php.ini && \
 	/rm-devel.sh
