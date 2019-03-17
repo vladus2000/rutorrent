@@ -37,6 +37,5 @@ VOLUME /home/evil/downloads
 VOLUME /home/evil/rtorrent
 VOLUME /usr/share/webapps/rutorrent/share/settings
 
-#TODO: add https options
-
+#TODO: add https options, http password options
 
