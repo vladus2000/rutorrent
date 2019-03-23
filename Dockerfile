@@ -31,6 +31,16 @@ RUN \
 	mv /php.ini /etc/php/php.ini && \
 	rm -rf /usr/share/webapps/rutorrent/share/settings && \
 	ln -s /config/rutorrent /usr/share/webapps/rutorrent/share/settings && \
+	echo net.core.rmem_max = 16777216 >> /etc/sysctl.d/99-sysctl.conf && \
+	echo net.core.wmem_max = 16777216 >> /etc/sysctl.d/99-sysctl.conf && \
+	echo net.ipv4.tcp_wmem = 4096 12582912 16777216 >> /etc/sysctl.d/99-sysctl.conf && \
+	echo net.ipv4.tcp_rmem = 4096 12582912 16777216 >> /etc/sysctl.d/99-sysctl.conf && \
+	echo net.ipv4.tcp_slow_start_after_idle = 0 >> /etc/sysctl.d/99-sysctl.conf && \
+	echo net.core.netdev_max_backlog = 5000 >> /etc/sysctl.d/99-sysctl.conf && \
+	echo net.core.optmem_max = 65536 >> /etc/sysctl.d/99-sysctl.conf && \
+	echo net.core.rmem_default = 1048576 >> /etc/sysctl.d/99-sysctl.conf && \
+	echo net.core.wmem_default = 1048576 >> /etc/sysctl.d/99-sysctl.conf && \
+	echo net.ipv4.tcp_fastopen = 3 >> /etc/sysctl.d/99-sysctl.conf && \
 	/rm-devel.sh
 
 EXPOSE 8069
@@ -40,6 +50,4 @@ CMD /bin/bash -c /startup.sh
 
 VOLUME /config
 VOLUME /downloads
-
-#TODO: add https options, http password options
 
