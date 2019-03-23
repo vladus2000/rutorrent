@@ -1,3 +1,10 @@
+if [ ! -f /config/.rtorrent.rc ]; then
+	cp ~evil/.rtorrent.rc /config/.
+fi
+if [ ! -f /config/autodl.cfg ]; then
+	cp ~evil/autodl.cfg /config/.
+fi
+/runuser.sh evil 'mkdir /config/{rtorrent,rutorrent}'
 su - evil -c 'mkdir -p ~evil/rtorrent/.session'
 rm -f ~evil/rtorrent/.session/rtorrent.lock
 /fixuser.sh evil

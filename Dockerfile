@@ -5,9 +5,12 @@ COPY shiz/ /home/evil/shiz/
 
 RUN \
 	/install-devel.sh && \
+	mkdir -p /config/{rtorrent,rutorrent} /downloads && \
+	chown evil:evil -R /config /downloads && \
+	ln -s /config/rtorrent /home/evil/rtorrent && \
 	su - evil -c 'yay -S --needed --noconfirm rsync rtorrent geoip php-geoip plowshare mktorrent nginx irssi perl-archive-zip perl-digest-sha1 perl-html-parser perl-json perl-json-xs perl-net-ssleay perl-xml-libxml perl-xml-libxslt fcgi fcgiwrap spawn-fcgi screen php-fpm mediainfo procps-ng' && \
 	chown -R evil ~evil/shiz && \
-	su - evil -c 'mkdir -p ~/.irssi/scripts/autorun && cd ~/.irssi/scripts && git init && git remote add origin https://github.com/autodl-community/autodl-irssi.git && git pull origin master && cp autodl-irssi.pl autorun/ && mkdir -p ~/.autodl && cp ~/shiz/autodl.cfg ~/.autodl/autodl.cfg && cp ~/shiz/.rtorrent.rc ~/.rtorrent.rc && mkdir -p ~/rtorrent/.session' && \
+	su - evil -c 'mkdir -p ~/.irssi/scripts/autorun && cd ~/.irssi/scripts && git init && git remote add origin https://github.com/autodl-community/autodl-irssi.git && git pull origin master && cp autodl-irssi.pl autorun/ && mkdir -p ~/.autodl && cp ~/shiz/autodl.cfg /config && ln -s /config/autodl.cfg ~/.autodl/autodl.cfg && cp ~/shiz/.rtorrent.rc /config/.rtorrent.rc && ln -s /config/.rtorrent.rc ~/.rtorrent.rc && mkdir -p ~/rtorrent/.session && ln -s /downloads ~/downloads' && \
 	mkdir -p /usr/share/webapps && \
 	cd /usr/share/webapps && \
 	git clone https://github.com/Novik/ruTorrent.git && \
@@ -26,6 +29,8 @@ RUN \
 	chown -R evil:evil /usr/share/webapps/rutorrent && \
 	sed -e 's/;extension=sockets/extension=sockets/' /etc/php/php.ini > /php.ini && \
 	mv /php.ini /etc/php/php.ini && \
+	rm -rf /usr/share/webapps/rutorrent/share/settings && \
+	ln -s /config/rutorrent /usr/share/webapps/rutorrent/share/settings && \
 	/rm-devel.sh
 
 EXPOSE 8069
@@ -33,9 +38,8 @@ EXPOSE 49152
 
 CMD /bin/bash -c /startup.sh
 
-VOLUME /home/evil/downloads
-VOLUME /home/evil/rtorrent
-VOLUME /usr/share/webapps/rutorrent/share/settings
+VOLUME /config
+VOLUME /downloads
 
 #TODO: add https options, http password options
 
