@@ -14,5 +14,5 @@ chmod -R ugo+rw /usr/share/webapps/rutorrent/share/settings
 /unevil.sh
 php-fpm
 nginx
-su - evil -c 'screen -d -m -S rtorrent rtorrent'
+su - evil -c 'screen -d -m -S rtorrent /run_rtorrent.sh'
 su - evil -c 'screen -d -m -S irssi irssi'
