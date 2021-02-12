@@ -16,3 +16,6 @@ php-fpm
 nginx
 su - evil -c 'screen -d -m -S rtorrent /run_rtorrent.sh'
 su - evil -c 'screen -d -m -S irssi irssi'
+if [ -z /config/extra_startup.sh ]; then
+	/config/extra_startup.sh
+fi
