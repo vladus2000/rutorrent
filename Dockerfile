@@ -15,7 +15,7 @@ RUN \
 	su - evil -c 'mkdir -p ~/.irssi/scripts/autorun && cd ~/.irssi/scripts && git init && git remote add origin https://github.com/autodl-community/autodl-irssi.git && git pull origin master && cp autodl-irssi.pl autorun/ && mkdir -p ~/.autodl && cp ~/shiz/autodl.cfg /config && ln -s /config/autodl.cfg ~/.autodl/autodl.cfg && cp ~/shiz/.rtorrent.rc /config/.rtorrent.rc && ln -s /config/.rtorrent.rc ~/.rtorrent.rc && mkdir -p ~/rtorrent/.session && ln -s /downloads ~/downloads' && \
 	mkdir -p /usr/share/webapps && \
 	cd /usr/share/webapps && \
-	git clone https://github.com/Novik/ruTorrent.git && \
+	git clone https://github.com/Novik/ruTorrent.git -b v3.10 --depth 1 && \
 	mv ruTorrent rutorrent && \
 	cd /usr/share/webapps/rutorrent/plugins && \
 	git clone https://github.com/autodl-community/autodl-rutorrent.git autodl-irssi && \
@@ -28,7 +28,7 @@ RUN \
 	cp ~evil/shiz/base_startup.sh / && \
 	cp ~evil/shiz/startup.sh / && \
 	cp ~evil/shiz/nginx.conf /etc/nginx/ && \
-	chmod +x /startup.sh /base_startup.sh && \
+	chmod +x /*.sh && \
 	chown -R evil:evil /usr/share/webapps/rutorrent && \
 	sed -e 's/;extension=sockets/extension=sockets/' /etc/php/php.ini > /php.ini && \
 	mv /php.ini /etc/php/php.ini && \
