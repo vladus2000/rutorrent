@@ -9,9 +9,11 @@ RUN \
 	chown evil:evil -R /config /downloads && \
 	ln -s /config/rtorrent /home/evil/rtorrent && \
 	su - evil -c 'yay -S --needed --noconfirm --removemake --cleanafter rsync rtorrent geoip php-geoip plowshare mktorrent nginx irssi perl-archive-zip perl-digest-sha1 perl-html-parser perl-json perl-json-xs perl-net-ssleay perl-xml-libxml perl-xml-libxslt fcgi fcgiwrap spawn-fcgi screen php-fpm mediainfo procps-ng python-cfscrape nodejs python-requests-toolbelt python-setuptools go' && \
+	su - evil -c 'yay -S --needed --noconfirm --removemake --cleanafter python-cloudscraper' && \
 	pacman -S --needed --noconfirm python-pip python-asn1crypto python-brotli python-cffi python-cryptography python-pycparser python-pyopenssl python-tzlocal && \
 	chown -R evil ~evil/shiz && \
 	su - evil -c 'mkdir -p ~/.irssi/scripts/autorun && cd ~/.irssi/scripts && git init && git remote add origin https://github.com/autodl-community/autodl-irssi.git && git pull origin master && cp autodl-irssi.pl autorun/ && mkdir -p ~/.autodl && cp ~/shiz/autodl.cfg /config && ln -s /config/autodl.cfg ~/.autodl/autodl.cfg && cp ~/shiz/.rtorrent.rc /config/.rtorrent.rc && ln -s /config/.rtorrent.rc ~/.rtorrent.rc && mkdir -p ~/rtorrent/.session && ln -s /downloads ~/downloads' && \
+	pacman --noconfirm -U https://archive.archlinux.org/packages/l/libtorrent/libtorrent-0.13.8-4-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/r/rtorrent/rtorrent-0.9.8-6-x86_64.pkg.tar.zst && \
 	mkdir -p /usr/share/webapps && \
 	cd /usr/share/webapps && \
 	git clone https://github.com/Novik/ruTorrent.git -b v3.10 --depth 1 && \
