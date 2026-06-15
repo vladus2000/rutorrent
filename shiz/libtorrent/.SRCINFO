@@ -1,0 +1,13 @@
+pkgbase = libtorrent
+	pkgdesc = BitTorrent library with a focus on high performance and good code
+	pkgver = 0.13.8
+	pkgrel = 4
+	url = https://rakshasa.github.io/rtorrent/
+	arch = x86_64
+	license = GPL
+	makedepends = git
+	depends = openssl
+	source = git+https://github.com/rakshasa/libtorrent.git#tag=v0.13.8
+	sha256sums = 71e09b1b878ba463b3698968afd94412623b793b95a6c06967b405c1b7f584f3
+
+pkgname = libtorrent

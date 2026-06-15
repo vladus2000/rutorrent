@@ -5,16 +5,17 @@ COPY shiz/ /home/evil/shiz/
 
 RUN \
 	/install-devel.sh && \
-	mkdir -p /config/{rtorrent,rutorrent} /downloads && \
+	mkdir -p /config/{rtorrent,rutorrent, flood, autobrr} /downloads && \
 	chown evil:evil -R /config /downloads && \
 	ln -s /config/rtorrent /home/evil/rtorrent && \
-	su - evil -c 'yay -S --needed --noconfirm --removemake --cleanafter rsync rtorrent geoip php-geoip mktorrent nginx irssi perl-archive-zip perl-digest-sha1 perl-html-parser perl-json perl-json-xs perl-net-ssleay perl-xml-libxml perl-xml-libxslt fcgi fcgiwrap spawn-fcgi screen php-fpm mediainfo procps-ng python-cfscrape nodejs python-setuptools go' && \
+	su - evil -c 'yay -S --needed --noconfirm --removemake --cleanafter rsync geoip php-geoip mktorrent nginx irssi perl-archive-zip perl-digest-sha1 perl-html-parser perl-json perl-json-xs perl-net-ssleay perl-xml-libxml perl-xml-libxslt fcgi fcgiwrap spawn-fcgi screen php-fpm mediainfo procps-ng python-cfscrape nodejs python-setuptools go autobrr npm wget' && \
 	pacman -S --needed --noconfirm python-pip python-asn1crypto python-brotli python-cffi python-cryptography python-pycparser python-pyopenssl python-tzlocal && \
 	chown -R evil ~evil/shiz && \
-	su - evil -c 'mkdir -p ~/.irssi/scripts/autorun && cd ~/.irssi/scripts && git init && git remote add origin https://github.com/autodl-community/autodl-irssi.git && git pull origin master && cp autodl-irssi.pl autorun/ && mkdir -p ~/.autodl && cp ~/shiz/autodl.cfg /config && ln -s /config/autodl.cfg ~/.autodl/autodl.cfg && cp ~/shiz/.rtorrent.rc /config/.rtorrent.rc && ln -s /config/.rtorrent.rc ~/.rtorrent.rc && mkdir -p ~/rtorrent/.session && ln -s /downloads ~/downloads' && \
-	pacman --noconfirm -U https://archive.archlinux.org/packages/l/libtorrent/libtorrent-0.13.8-4-x86_64.pkg.tar.zst https://archive.archlinux.org/packages/r/rtorrent/rtorrent-0.9.8-6-x86_64.pkg.tar.zst && \
+	su - evil -c 'mkdir -p ~/.irssi/scripts/autorun && cd ~/.irssi/scripts && git init && git remote add origin https://github.com/autodl-community/autodl-irssi.git && git pull origin master && cp autodl-irssi.pl autorun/ && mkdir -p ~/.autodl && cp ~/shiz/autodl.cfg /config && ln -s /config/autodl.cfg ~/.autodl/autodl.cfg && cp ~/shiz/.rtorrent.rc /config/.rtorrent.rc && ln -s /config/.rtorrent.rc ~/.rtorrent.rc && ln -s /config/.rtorrent.rc ~/rtorrent.rc && mkdir -p ~/rtorrent/.session && ln -s /downloads ~/downloads' && \
+	npm install --global flood && \
+	su - evil -c 'cd ~/shiz/libtorrent && makepkg --noconfirm -sif && cd ../libxmlrpc && makepkg --noconfirm -sif && cd ../rtorrent && makepkg --noconfirm -sif && cd .. && rm -rf libtorrent libxmlrpc rtorrent' && \
 	cp /etc/pacman.conf /etc/pacman.conf.old && \
-	sed 's/#IgnorePkg.*=/IgnorePkg = rtorrent libtorrent/' /etc/pacman.conf.old > /etc/pacman.conf && \
+	sed -e 's/#IgnorePkg.*=/IgnorePkg = rtorrent libtorrent/' /etc/pacman.conf.old > /etc/pacman.conf && \
 	mkdir -p /usr/share/webapps && \
 	cd /usr/share/webapps && \
 	git clone https://github.com/Novik/ruTorrent.git -b v3.10 --depth 1 && \
@@ -27,12 +28,16 @@ RUN \
 	cp ~evil/shiz/conf.php /usr/share/webapps/rutorrent/plugins/autodl-irssi/ && \
 	cp ~evil/shiz/config.php /usr/share/webapps/rutorrent/conf/ && \
 	cp ~evil/shiz/run_rtorrent.sh / && \
+	cp ~evil/shiz/run_flood.sh / && \
+	cp ~evil/shiz/run_autobrr.sh / && \
 	cp ~evil/shiz/base_startup.sh / && \
 	cp ~evil/shiz/startup.sh / && \
 	cp ~evil/shiz/nginx.conf /etc/nginx/ && \
 	chmod +x /*.sh && \
 	chown -R evil:evil /usr/share/webapps/rutorrent && \
-	sed -e 's/;extension=sockets/extension=sockets/' /etc/php/php.ini > /php.ini && \
+	sed -e 's/;extension=sockets/extension=sockets/' /etc/php/php.ini > /php2.ini && \
+	sed -e 's/;register_argc_argv = Off/register_argc_argv = On/' /php2.ini > /php.ini && \
+	rm /php2.ini && \
 	mv /php.ini /etc/php/php.ini && \
 	rm -rf /usr/share/webapps/rutorrent/share/settings && \
 	ln -s /config/rutorrent /usr/share/webapps/rutorrent/share/settings && \
@@ -56,6 +61,11 @@ CMD /bin/bash -c /startup.sh
 VOLUME /config
 VOLUME /downloads
 
-# su - evil -c 'yay -S --needed --noconfirm --removemake --cleanafter python-cloudscraper' && \
-# plowshare
+# TODO:
+#  flood with autobrr
+#  check on sysctl stuff
+
+# old
+
+	#su - evil -c 'mkdir ~/dev && cd ~/dev && wget https://github.com/rakshasa/libtorrent/archive/refs/tags/v0.13.8.zip && unzip v0.13.8.zip && cd libtorrent-0.13.8/ && autoreconf -ivf && ./configure && make -j 2 && make install ' && \
 
