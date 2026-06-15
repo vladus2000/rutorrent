@@ -5,7 +5,7 @@ COPY shiz/ /home/evil/shiz/
 
 RUN \
 	/install-devel.sh && \
-	mkdir -p /config/{rtorrent,rutorrent, flood, autobrr} /downloads && \
+	mkdir -p /config/{rtorrent,rutorrent,flood,autobrr} /downloads && \
 	chown evil:evil -R /config /downloads && \
 	ln -s /config/rtorrent /home/evil/rtorrent && \
 	su - evil -c 'yay -S --needed --noconfirm --removemake --cleanafter rsync geoip php-geoip mktorrent nginx irssi perl-archive-zip perl-digest-sha1 perl-html-parser perl-json perl-json-xs perl-net-ssleay perl-xml-libxml perl-xml-libxslt fcgi fcgiwrap spawn-fcgi screen php-fpm mediainfo procps-ng python-cfscrape nodejs python-setuptools go autobrr npm wget' && \
